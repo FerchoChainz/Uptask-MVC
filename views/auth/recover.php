@@ -1,20 +1,11 @@
-<div class="contenedor login">
+<div class="contenedor recover">
     
 <?php include_once __DIR__ . '/../templates/site-name.php'?>
 
     <div class="contenedor-sm">
-        <p class="descripcion-pagina">Iniciar Sesion</p>
+        <p class="descripcion-pagina">Coloca tu nuevo password</p>
 
-        <form action="/" class="formulario" method="POST">
-            <div class="campo">
-                <label for="email">Email</label>
-                <input type="email"
-                    id="email"
-                    placeholder="Tu correo"
-                    name="email"
-                    
-                    >
-            </div>
+        <form action="/recover" class="formulario" method="POST">
             <div class="campo">
                 <label for="password">Password</label>
                 <input type="password"
@@ -25,7 +16,7 @@
                     >
             </div>
 
-            <input type="submit" class="boton" value="Iniciar Sesion">
+            <input type="submit" class="boton" value="Guardar Password">
         </form>
 
         <div class="acciones">

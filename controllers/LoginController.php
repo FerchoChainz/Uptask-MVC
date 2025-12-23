@@ -26,22 +26,39 @@ class LoginController {
     public static function create(Router $router){
         
         
-        
         // render the view
         $router->render('auth/create', [
             'titulo' => 'Crea tu cuenta.'
         ]);
     }
 
-    public static function recover(){
-        echo 'desde restablecer';
+    public static function forget(Router $router){
+
+        $router->render('auth/forget',[
+            'titulo' => "Olvide mi password"
+        ]);
     }
 
-    public static function message(){
-        echo 'desde mensaje';
+    public static function recover(Router $router){
+
+        $router->render('auth/recover',[
+            'titulo' => 'Reestablece tu password'
+        ]);
     }
 
-    public static function confirm(){
-        echo 'desde confirmar';
+    public static function message(Router $router){
+
+
+        $router->render('auth/message',[
+            'titulo'=> 'Mensaje'
+        ]);
+    }
+
+    public static function confirm(Router $router){
+
+
+        $router->render('auth/confirm',[
+            'titulo' => 'Confirma tu cuenta'
+        ]);
     }
 }

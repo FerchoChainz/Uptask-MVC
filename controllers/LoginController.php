@@ -2,6 +2,7 @@
 
 namespace Controllers;
 
+use Model\User;
 use MVC\Router;
 
 class LoginController {
@@ -24,11 +25,50 @@ class LoginController {
     }
 
     public static function create(Router $router){
-        
+        $alerts = [];
+        $user = new User;
+
+
+        if($_SERVER['REQUEST_METHOD'] === 'POST'){
+            $user->sincronizar($_POST);
+            $alerts = $user->validateNewAccount();
+
+
+            if(empty($alerts)){
+                // if user exist already
+
+                $userExist = User::where('email',$user->email);
+    
+                if($userExist){
+                    User::setAlerta('error','El usuario ya esta registrado');
+    
+                    $alerts = User::getAlertas();
+                } else {
+                    // Hash password
+                    $user->hashPassword();
+
+                    // delete second password
+                    unset($user->password2);
+
+                    // create token
+                    $user->generateToken();
+                    // create new user
+                    $resultado = $user->guardar();
+
+                    if($resultado){
+                        header('Location: /message');
+                    }
+                    
+                }
+            }
+
+        }
         
         // render the view
         $router->render('auth/create', [
-            'titulo' => 'Crea tu cuenta.'
+            'titulo' => 'Crea tu cuenta.',
+            'user' => $user,
+            'alerts' => $alerts
         ]);
     }
 

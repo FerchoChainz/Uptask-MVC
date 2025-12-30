@@ -6,9 +6,9 @@ use PHPMailer\PHPMailer\PHPMailer;
 
 class Email {
 
-    public $email;
-    public $name;
-    public $token;
+    protected $email;
+    protected $name;
+    protected $token;
 
     public function __construct($email, $name, $token){
         $this->email = $email;
@@ -23,15 +23,15 @@ class Email {
 
         // Config SMTP 
         $email->isSMTP();
-        $email->Host = $_ENV['EMAIL_HOST'];
+        $email->Host = 'sandbox.smtp.mailtrap.io';
         $email->SMTPAuth = true;
-        $email->Port = $_ENV['EMAIL_PORT'];
-        $email->Username = $_ENV['EMAIL_USER'];
-        $email->Password = $_ENV['EMAIL_PSWD'];
+        $email->Port = 2525;
+        $email->Username = '906bcff8ae7a14';
+        $email->Password = '5ec78622c1908f';
         $email->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
 
         $email->setFrom('test@demomailtrap.co', 'Uptask');
-        $email->addAddress('a21110132@ceti.mx', 'Uptask.com');
+        $email->addAddress('cuentas@uptask.com', 'Uptask.com');
         $email->Subject = 'Confirma tu cuenta';
 
         $email->isHTML(true);
@@ -40,8 +40,17 @@ class Email {
 
         // Define content
         $content = '<HTML>';
-        $content .= '<p><strong>Hola' . $this->name . '</strong> Has creado tu cuenta en Uptask. Confirma tu cuenta dando click en el siguiente enlance.</p>';
+        $content .= '<p><strong>Hola, ' . $this->name . '</strong> Has creado tu cuenta en Uptask. Confirma tu cuenta dando click en el siguiente enlance.</p>';
+        $content .= "<p>Presiona aqui <a href='http://localhost:3000/confirm?token=" . $this->token . "'>Confirmar Cuenta</a></p>";
+        $content .= "<p>Si no creaste esta cuenta, ignora este mensaje.</p>";
+        $content .= '</html>';
+
+        $email->Body = $content;
+
+        $email->send();
 
     }
+
+
 
 }

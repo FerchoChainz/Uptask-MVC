@@ -82,9 +82,16 @@ class LoginController {
     }
 
     public static function forget(Router $router){
+        $alerts = [];
+
+
+        if($_SERVER['REQUEST_METHOD'] === 'POST'){
+
+        }
 
         $router->render('auth/forget',[
-            'titulo' => "Olvide mi password"
+            'titulo' => "Olvide mi password",
+            'alerts' => $alerts
         ]);
     }
 
@@ -105,9 +112,38 @@ class LoginController {
 
     public static function confirm(Router $router){
 
+        // read url token
+        $token = s($_GET['token']);
+        
+
+        if(!$token){
+            header('Location: /');
+        }
+
+        // find user with the specific token
+        $user = User::where('token', $token);
+
+        if(empty($user)){
+            // user token not found
+            User::setAlerta('error','Token no valido');
+        }else{ 
+            // confirm account
+            $user->confirmed = 1;
+            $user->token = null;
+            unset($user->password2);
+
+            // save in data base
+            $user->guardar();
+
+            User::setAlerta('succes','Cuenta comprobada correctamente');
+
+        }
+
+        $alerts = User::getAlertas();
 
         $router->render('auth/confirm',[
-            'titulo' => 'Confirma tu cuenta'
+            'titulo' => 'Confirma tu cuenta',
+            'alerts' => $alerts
         ]);
     }
 }

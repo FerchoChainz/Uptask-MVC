@@ -12,4 +12,9 @@
         background-color: lighten(v.$rojo , 60%);
         border-left: .5rem solid v.$rojo;
     }
+
+    &.succes{
+        background-color: lighten(v.$verde , 60%);
+        border-left: .5rem solid v.$verde;
+    }
 }

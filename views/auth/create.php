@@ -5,14 +5,16 @@
     <div class="contenedor-sm">
         <p class="descripcion-pagina">Crea tu cuenta en Uptask</p>
 
-        <form action="/" class="formulario" method="POST">
+        <?php include_once  __DIR__ .'/../templates/alerts.php'?> 
+
+        <form action="/create" class="formulario" method="POST">
             <div class="campo">
-                <label for="nombre">Nombre</label>
+                <label for="name">Nombre</label>
                 <input type="text"
-                    id="nombre"
+                    id="name"
                     placeholder="Tu Nombre"
-                    name="nombre"
-                    
+                    name="name"
+                    value="<?php echo $user->name?>"
                     >
             </div>
 
@@ -23,7 +25,7 @@
                     id="email"
                     placeholder="Tu correo"
                     name="email"
-                    
+                    value="<?php echo $user->email?>"
                     >
             </div>
             <div class="campo">

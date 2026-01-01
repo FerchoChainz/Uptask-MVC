@@ -4,6 +4,10 @@
 
     <div class="contenedor-sm">
         <p class="descripcion-pagina">Crea tu cuenta en Uptask</p>
+
+        <?php include_once  __DIR__ . '/../templates/alerts.php' ?>
+
+
         <form action="/" class="formulario" method="POST">
 
             <div class="campo">

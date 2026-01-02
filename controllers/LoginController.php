@@ -36,8 +36,8 @@ class LoginController {
 
 
             if(empty($alerts)){
-                // if user exist already
 
+                // if user exist already
                 $userExist = User::where('email',$user->email);
     
                 if($userExist){
@@ -86,8 +86,37 @@ class LoginController {
 
 
         if($_SERVER['REQUEST_METHOD'] === 'POST'){
+            $user = new User($_POST);
 
+            $alerts = $user->validateEmail();
+
+            if(empty($alerts)){
+
+                // search user by column email
+                $user = User::where('email', $user->email);
+                unset($user->password2);
+
+                // debbuger($user);
+
+                // check if user contain data and checking if is confirmed
+                if($user && $user->confirmed === '1'){
+                    $user->generateToken();
+                    $user->guardar();
+
+                    // Making email object model to send
+                    $email = new Email($user->email, $user->name, $user->token);
+                    $email->sendInstructions();
+
+                    // showing succes alert
+                    User::setAlerta('succes','Las instrucciones se han enviado correctamente');
+                }else{
+                    User::setAlerta('error','El correo no existe o no esta confirmado');
+                }
+
+            }
         }
+
+        $alerts = User::getAlertas();
 
         $router->render('auth/forget',[
             'titulo' => "Olvide mi password",
@@ -97,8 +126,46 @@ class LoginController {
 
     public static function recover(Router $router){
 
+        // set the alerts array empty
+        $alerts = [];
+        $error = false;
+
+        // get the user token
+        $token = $_GET['token'];
+
+        // search user by token
+        $user = User::where('token', $token);
+
+        // debbuger($user);
+
+        if(empty($user)){
+            // showing error if the token is incorrect
+            User::setAlerta('error','Token no valido.');
+            $error = true;
+        } 
+
+        if($_SERVER['REQUEST_METHOD'] === 'POST'){
+
+            // new instance of user and get the data of global POST
+            $password = new User($_POST);
+            $alerts = $password->validateNewPassword();
+
+            // debbuger($alerts);
+
+            // validate if empty errors
+            if(empty($alerts)){
+
+            }
+
+        }
+
+        // get the alerts
+        $alerts = User::getAlertas();
+
         $router->render('auth/recover',[
-            'titulo' => 'Reestablece tu password'
+            'titulo' => 'Reestablece tu password',
+            'error' => $error,
+            'alerts' => $alerts
         ]);
     }
 

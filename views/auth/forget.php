@@ -3,12 +3,12 @@
     <?php include_once  __DIR__ . '/../templates/site-name.php' ?>
 
     <div class="contenedor-sm">
-        <p class="descripcion-pagina">Crea tu cuenta en Uptask</p>
+        <p class="descripcion-pagina">¿Olvidaste tu password?</p>
 
         <?php include_once  __DIR__ . '/../templates/alerts.php' ?>
 
 
-        <form action="/" class="formulario" method="POST">
+        <form action="/forget" class="formulario" method="POST">
 
             <div class="campo">
                 <label for="email">Email</label>

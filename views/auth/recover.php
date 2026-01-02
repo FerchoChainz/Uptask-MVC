@@ -2,10 +2,14 @@
     
 <?php include_once __DIR__ . '/../templates/site-name.php'?>
 
-    <div class="contenedor-sm">
-        <p class="descripcion-pagina">Coloca tu nuevo password</p>
 
-        <form action="/recover" class="formulario" method="POST">
+
+<div class="contenedor-sm">
+    <?php include_once __DIR__ . '/../templates/alerts.php' ?>
+    <?php if($error) return null ?>
+    <p class="descripcion-pagina">Coloca tu nuevo password</p>
+
+        <form  class="formulario" method="POST">
             <div class="campo">
                 <label for="password">Password</label>
                 <input type="password"

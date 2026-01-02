@@ -135,6 +135,7 @@ class LoginController {
 
         // search user by token
         $user = User::where('token', $token);
+        unset($user->password2);
 
         // debbuger($user);
 
@@ -148,12 +149,24 @@ class LoginController {
 
             // new instance of user and get the data of global POST
             $password = new User($_POST);
+            unset($password->password2);
             $alerts = $password->validateNewPassword();
 
             // debbuger($alerts);
 
             // validate if empty errors
             if(empty($alerts)){
+                $user->password = null;
+                $user->password = $password->password;
+                $user->hashPassword();
+                $user->token = null;
+                
+                
+                $result = $user->guardar();
+
+                if($result){
+                    header('Location: /');
+                }
 
             }
 

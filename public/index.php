@@ -2,6 +2,7 @@
 
 require_once __DIR__ . '/../includes/app.php';
 
+use Controllers\DashboardController;
 use Controllers\LoginController;
 use MVC\Router;
 $router = new Router();
@@ -33,7 +34,7 @@ $router->get('/confirm',[LoginController::class, 'confirm']);
 
 
 // DASHBOARD PROJECTS
-$router->get('/dashboard',);
+$router->get('/dashboard',[DashboardController::class, 'index']);   
 
 
 // Comprueba y valida las rutas, que existan y les asigna las funciones del Controlador

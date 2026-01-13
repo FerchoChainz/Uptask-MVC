@@ -6,6 +6,10 @@ use Controllers\LoginController;
 use MVC\Router;
 $router = new Router();
 
+
+// 404 PAGE
+$router->get('/404',[LoginController::class,'notFound']);
+
 // LOGIN
 $router->get('/',[LoginController::class,'login']);
 $router->post('/',[LoginController::class,'login']);
@@ -26,6 +30,10 @@ $router->post('/recover',[LoginController::class, 'recover']);
 // CONFIRM ACCOUNT
 $router->get('/message',[LoginController::class, 'message']);
 $router->get('/confirm',[LoginController::class, 'confirm']);
+
+
+// DASHBOARD PROJECTS
+$router->get('/dashboard',);
 
 
 // Comprueba y valida las rutas, que existan y les asigna las funciones del Controlador

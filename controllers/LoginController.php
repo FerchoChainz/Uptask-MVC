@@ -10,19 +10,50 @@ class LoginController {
 
     public static function login(Router $router){
 
-        if($_SERVER['REQUEST_METHOD'] === 'POST'){
+        $alerts = [];
 
+        if($_SERVER['REQUEST_METHOD'] === 'POST'){
+            $auth = new User($_POST);
+
+            $alerts = $auth->validateLogin();
+
+            if(empty($alerts)){
+                // verify user exist
+
+                $user = User::where('email', $auth->email);
+
+                if(!$user || !$user->confirmed){
+                    User::setAlerta('error','El usuario no existe o no ha sido confirmado');
+                }else {
+                    // User exist 
+
+                    if(password_verify($_POST['password'], $user->password)){
+
+                        session_start();
+                        $_SESSION['id'] = $user->id;
+                        $_SESSION['name'] = $user->name;
+                        $_SESSION['login'] = true;
+
+                        // redirect
+                        header('Location: /dashboard');
+                    } else{
+                        User::setAlerta('error','Password incorrecto');
+                    }
+                }
+            }            
         }
 
+        $alerts = User::getAlertas();
 
         // render the view
         $router->render('auth/login', [
-            'titulo' => 'Iniciar Sesion.'
+            'titulo' => 'Iniciar Sesion.',
+            'alerts' => $alerts
         ]);
     }
 
     public static function logout(){
-
+        echo 'desde logout';
     }
 
     public static function create(Router $router){

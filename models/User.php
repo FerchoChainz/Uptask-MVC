@@ -28,6 +28,25 @@ class User extends ActiveRecord{
     }
 
 
+    // validate Login
+    public function validateLogin(){
+        if(!$this->email){
+            self::$alertas['error'][] = "El email no puede ir vacio";
+        }
+
+        if(filter_var(!$this->email, FILTER_VALIDATE_EMAIL)){
+            self::$alertas['error'][] = "El formato de email no es valido";
+        }
+
+        if(!$this->password){
+            self::$alertas['error'][] = "El password no puede ir vacio";
+        }
+
+        return self::$alertas;
+    }
+
+
+
     // Validate new accoutns
     public function validateNewAccount(){
         if(!$this->name){

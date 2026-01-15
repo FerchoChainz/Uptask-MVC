@@ -7,8 +7,14 @@ use MVC\Router;
  class DashboardController {
 
     public static function index(Router $router){
-        echo 'desde index';
 
-        $router->render('',[]);
+        session_start();
+
+        // protecting rout
+        isAuth();
+
+        $router->render('dashboard/index',[
+            'titulo' => 'Dashboard'
+        ]);
     }
  }

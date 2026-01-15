@@ -14,7 +14,7 @@ $router->get('/404',[LoginController::class,'notFound']);
 // LOGIN
 $router->get('/',[LoginController::class,'login']);
 $router->post('/',[LoginController::class,'login']);
-$router->get('/logout',[LoginController::class,'login']);
+$router->get('/logout',[LoginController::class,'logout']);
 
 // CREATE ACCOUNT
 $router->get('/create',[LoginController::class, 'create']);
@@ -34,7 +34,7 @@ $router->get('/confirm',[LoginController::class, 'confirm']);
 
 
 // DASHBOARD PROJECTS
-$router->get('/dashboard',[DashboardController::class, 'index']);   
+$router->get('/dashboard',[DashboardController::class, 'index']);
 
 
 // Comprueba y valida las rutas, que existan y les asigna las funciones del Controlador

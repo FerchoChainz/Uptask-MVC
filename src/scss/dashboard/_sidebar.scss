@@ -22,7 +22,8 @@
             transition-duration: 300ms;
             text-transform: uppercase;
 
-            &:hover{
+            &:hover,
+            &.activo{
                 background-color: lighten(v.$azulOscuroLight, 20%);
                 border-radius: .5rem;
             }

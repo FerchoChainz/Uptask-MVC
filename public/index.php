@@ -35,6 +35,13 @@ $router->get('/confirm',[LoginController::class, 'confirm']);
 
 // DASHBOARD PROJECTS
 $router->get('/dashboard',[DashboardController::class, 'index']);
+$router->get('/create-project',[DashboardController::class, 'create_project']);
+$router->post('/create-project',[DashboardController::class, 'create_project']);
+$router->get('/profile',[DashboardController::class, 'profile']);
+
+// PROJECT ROUTES
+$router->get('/project',[DashboardController::class,'project']);
+
 
 
 // Comprueba y valida las rutas, que existan y les asigna las funciones del Controlador

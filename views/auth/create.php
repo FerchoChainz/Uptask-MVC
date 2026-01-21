@@ -3,7 +3,7 @@
     <?php include_once  __DIR__ .'/../templates/site-name.php'?> 
 
     <div class="contenedor-sm">
-        <p class="descripcion-pagina">Crea tu cuenta en Uptask</p>
+        <p class="descripcion-pagina">Crea tu cuenta en Worktask</p>
 
         <?php include_once  __DIR__ .'/../templates/alerts.php'?> 
 

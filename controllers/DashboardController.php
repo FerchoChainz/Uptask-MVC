@@ -14,8 +14,16 @@ use MVC\Router;
         // protecting rout
         isAuth();
 
+        // get te id of the session
+        $id = $_SESSION['id'];
+
+        // projects to belong to an ID
+        $projects = Project::belongsTo('ownerid',$id);
+
+
         $router->render('dashboard/index',[
-            'titulo' => 'Proyectos'
+            'titulo' => 'Proyectos',
+            'projects' => $projects
         ]);
     }
 
@@ -75,7 +83,7 @@ use MVC\Router;
 
 
         $router->render('dashboard/project',[
-            'titulo' => 'Nombre del proyecto'
+            'titulo' => $project->project
         ]);
     }
 

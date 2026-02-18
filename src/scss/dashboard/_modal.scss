@@ -1,0 +1,63 @@
+@use "base/variables" as v;
+@use "base/mixins" as m;
+
+.modal {
+  position: absolute;
+  background-color: rgb(0 0 0 /0.8);
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+
+  .formulario {
+    max-width: 60rem;
+    background-color: v.$blanco;
+    padding: 2rem;
+    margin: 0 auto; // Center Horizontal
+    transform: translateY(-30rem);
+    transition-property: all;
+    transition-duration: 300ms;
+    opacity: 0;
+    border-radius: 1rem;
+
+    legend {
+      font-size: 2rem;
+      text-align: center;
+      font-weight: bold;
+      margin-bottom: 2rem;
+      display: block;
+    }
+
+    input[type="text"] {
+      border: 1px solid v.$gris;
+      border-radius: 0.5rem;
+    }
+
+    .opciones {
+      display: flex;
+      justify-content: space-between;
+      gap: 1.5rem;
+      margin-top: 2rem;
+      .submit-new-task {
+        @include m.boton(v.$azulOscuro, v.$blanco);
+        flex: 1;
+      }
+
+      .close-modal {
+        @include m.boton(v.$naranja, v.$blanco);
+        flex: 1;
+      }
+    }
+
+    &.animate {
+      position: relative;
+      top: 50%;
+      transform: translateY(-50%);
+      opacity: 1;
+    }
+    &.close {
+      transform: translateY(-200%);
+      opacity: 0;
+    }
+  }
+}

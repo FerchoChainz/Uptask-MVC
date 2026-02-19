@@ -49,11 +49,57 @@
                 },500);
 
             }
+            if(e.target.classList.contains('submit-new-task')){
+                submitFormNewTask();
+            }
 
 
             console.log(e.target);
         })
 
-        document.querySelector('body').appendChild(modal);
+        document.querySelector('.dashboard').appendChild(modal);
     }
+
+    function submitFormNewTask(){
+        const task = document.querySelector('#task').value.trim();
+
+        // if task is empty
+        if(task === ''){
+            // show error alert
+            showAlert('El nombre de la tarea es obligatorio','error', document.querySelector('.formulario legend'));
+            return;
+        } 
+
+        addTask(task);
+    }
+
+    // show alert
+    function showAlert(message, type, ref){
+        // prevent multiple alerts creations
+        const prevAlert = document.querySelector('.alert')
+        if(prevAlert){
+            prevAlert.remove();
+        }
+
+
+        const alert = document.createElement('DIV');
+
+        alert.classList.add('alert',type);
+        alert.textContent = message;
+
+        // insert the alert after of <legend>
+        // the ref is 'formulario legend'
+        ref.parentElement.insertBefore(alert, ref.nextElementSibling);
+
+        // delete alert after 5 secs 
+        setTimeout(() => {
+            alert.remove();
+        }, 3000);
+    }
+
+    // consult server to add a new task to the current project
+    function addTask(task){
+
+    }
+
 })();

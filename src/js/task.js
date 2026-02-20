@@ -98,8 +98,51 @@
     }
 
     // consult server to add a new task to the current project
-    function addTask(task){
+    // Here is the comunication with the server to create tasks
+    async function addTask(task){
+        // build request
+        const data = new FormData();
+        data.append('name', task);
+        data.append('projectId', getProject());
 
+        // use async-await
+
+        try {
+            // url to send request
+          const url = 'http://localhost:3000/api/task'  
+
+            // to connect to the API
+          const response = await fetch(url,{
+            method: 'POST',
+            body: data
+          });
+
+          const result = await response.json();
+          console.log(result);
+
+          showAlert(result.message,result.type, document.querySelector('.formulario legend'));
+
+          if(result.type === 'succes'){
+            setTimeout(() => {
+                const modal = document.querySelector('.modal');
+                modal.remove();
+            }, 3000);
+          }
+
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+
+    function getProject(){
+        // take the url
+        const projectParams = new URLSearchParams(window.location.search);
+
+        // to read the objects in the url
+        const project = Object.fromEntries(projectParams.entries());
+
+        return project.url;
     }
 
 })();
